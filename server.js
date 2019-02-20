@@ -1,25 +1,39 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+const knex = require('knex');
+const register = require('./controllers/register');
+const login = require('./controllers/login');
+const nutrition = require('./controllers/nutrition');
+const sleep = require('./controllers/sleep');
+const exercise = require('./controllers/exercise');
 
 const app = express();
-const port = process.env.PORT || 5656;
+const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-const Schema = mongoose.Schema({
-	user_id: String,
-	last_activity: String,
-	workouts: [{ title: String, workoutList: [{ text: String, weight: String, reps: String, sets: String }] }],
-	sleepData: { coordinates: [{ date: Number, hours: Number, quality: String }], dates: Array },
-	dailyFoods: [{ food: String, calories: String, fat: String, carbs: String, protein: String }]
-})
+const db = knex({
+  client: 'pg',
+  version: '11.2',
+  connection: {
+    host : '127.0.0.1',
+    user : 'blynn',
+    password : 'cookies',
+    database : 'wellness-tracker'
+  }
+});
 
-app.post("/login", (req, res) => { login.logIn(req, res) });
-app.post("/register", (req, res) => { register.handleRegister(req, res) });
+app.get("/nutrition", (req, res) => { nutrition.getNutrition(req, res, db)})
+app.get("/sleep", (req, res) => { sleep.getSleepData(req, res, db)})
+app.get("/exercise", (req, res) => { exercise.getWorkouts(req, res, db)})
+
+app.post("/login-fb", (req, res) => { login.logInFB(req, res, db) });
+app.post("/login-gh", (req, res) => { login.logInGithub(req, res, db) });
+
+app.post("/register-fb", (req, res) => { register.registerFB(req, res, db) });
+app.post("/register-github", (req, res) => { register.registerGithub(req, res, db) });
 
 
 app.listen(port, () => {

@@ -1,7 +1,12 @@
-const handleRegister = (req, res) =>  {
+const registerFB = (req, res) =>  {
+	
+}
+
+const registerGithub = (req, res) =>  {
 	
 }
 
 module.exports = {
-	handleRegister: handleRegister
+	registerFB: registerFB,
+	registerGithub: registerGithub
 }
