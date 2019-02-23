@@ -25,9 +25,16 @@ const db = knex({
   }
 });
 
-app.get("/nutrition", (req, res) => { nutrition.getNutrition(req, res, db)})
-app.get("/sleep", (req, res) => { sleep.getSleepData(req, res, db)})
-app.get("/exercise", (req, res) => { exercise.getWorkouts(req, res, db)})
+app.get("/nutrition/:id", (req, res) => { nutrition.getNutrition(req, res, db)});
+app.post("/nutrition-submit", (req, res) => { nutrition.addNutrition(req, res, db)});
+app.delete("/nutrition-delete", (req, res) => { nutrition.deleteNutrition(req, res, db)});
+
+app.get("/sleep/:id", (req, res) => { sleep.getSleepData(req, res, db)});
+app.post("/add-sleep", (req, res) => { sleep.addSleep(req, res, db)});
+app.put("/edit-sleep", (req, res) => { sleep.editSleep(req, res, db)});
+
+app.get("/exercise/:id", (req, res) => { exercise.getWorkouts(req, res, db)});
+app.post("/exercise-submit", (req, res) => { exercise.submitWorkouts(req, res, db)});
 
 app.post("/login-fb", (req, res) => { login.logInFB(req, res, db) });
 app.post("/login-gh", (req, res) => { login.logInGithub(req, res, db) });
@@ -46,6 +53,7 @@ paths:
 "/login" => gets user data (dailyFoods, workouts, sleepData) + data for landing page
 /register => posts user data to database
 /nutrition-submit => post, adds food to database
+/nutrition-remove => delete, removes food from database
 /sleep-add => post, adds sleep to database
 /sleep-edit => post, saves sleep changes
 /exercise-submit => post, adds food to database
