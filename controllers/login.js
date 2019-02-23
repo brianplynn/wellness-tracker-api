@@ -1,17 +1,15 @@
 const logInFB = (req, res, db) =>  {
 	const { id } = req.body;
-	const userid = "facebook_" + id;
+	const userid = "fb_" + id;
 	db.select()
 	.from('users')
-	.where('user_id', '=', userid)
+	.where('id', '=', userid)
 	.then(user => {
-		db.select()
-		.from('nutrition')
-		.where('User_id', '=', user[0].user_id)
-		.then(info => res.json(info))
-		.catch(err => {
-			res.json("No nutrition data available")
-		})
+		if (user[0]) {
+			res.json(user[0]);
+		} else {
+			throw new Error;
+		}
 	})
 	.catch(err => {
 	 	res.status(400).json('No such user. Please register');
