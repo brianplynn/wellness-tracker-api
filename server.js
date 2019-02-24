@@ -16,12 +16,9 @@ app.use(bodyParser.json());
 
 const db = knex({
   client: 'pg',
-  version: '11.2',
   connection: {
-    host : '127.0.0.1',
-    user : 'blynn',
-    password : 'cookies',
-    database : 'wellness-tracker'
+    connectionString : process.env.DATABASE_URL,
+    ssl: true,
   }
 });
 
