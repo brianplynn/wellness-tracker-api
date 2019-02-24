@@ -1,10 +1,16 @@
 const getSleepData = (req, res, db) =>  {
 	const { id } = req.params;
-	db.select('sleep_date', 'hours', 'quality')
-		.from('sleep')
-		.where('user_id', '=', id)
-		.then(data => res.json(data))
-		.catch(err => console.log(err))
+	db.transaction(trx => {
+		trx.raw(`delete from sleep where sleep_date < (current_date - interval '7 days')`)
+			.then(nums => {
+			  db.select('sleep_date', 'hours', 'quality')
+				.from('sleep')
+				.where('user_id', '=', id)
+				.then(data => res.json(data))
+			})
+			.then(trx.commit)
+			.catch(trx.rollback)
+	});
 }
 
 const addSleep = (req, res, db) =>  {

@@ -1,10 +1,17 @@
 const getNutrition = (req, res, db) =>  {
 	const { id } = req.params;
-	db.select('food', 'calories', 'fat', 'carbs', 'protein')
-		.from('nutrition')
-		.where('user_id', '=', id)
-		.then(data => res.json(data))
-		.catch(err => console.log(err))
+	db.transaction(trx => {
+		trx.raw(`delete from nutrition where date < current_date`)
+			.then(nums => {
+			  db.select('food', 'calories', 'fat', 'carbs', 'protein')
+				.from('nutrition')
+				.where('user_id', '=', id)
+				.then(data => res.json(data))
+				.catch(err => console.log(err))
+			})
+			.then(trx.commit)
+			.catch(trx.rollback)
+	})
 }
 
 const addNutrition = (req, res, db) =>  {
