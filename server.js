@@ -22,6 +22,10 @@ const db = knex({
   }
 });
 
+app.get('/', (req, res) => {
+	res.send('this is working');
+})
+
 app.get("/nutrition/:id", (req, res) => { nutrition.getNutrition(req, res, db)});
 app.post("/nutrition-submit", (req, res) => { nutrition.addNutrition(req, res, db)});
 app.delete("/nutrition-delete", (req, res) => { nutrition.deleteNutrition(req, res, db)});
