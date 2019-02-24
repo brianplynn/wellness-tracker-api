@@ -46,7 +46,7 @@ app.post("/register-github", (req, res) => { register.registerGithub(req, res, d
 
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`)
+    console.log(`${port}`)
 })
 
 /*

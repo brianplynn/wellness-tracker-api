@@ -1,7 +1,7 @@
 const getNutrition = (req, res, db) =>  {
 	const { id } = req.params;
 	db.transaction(trx => {
-		trx.raw(`delete from nutrition where date < current_date`)
+		trx.raw(`delete from nutrition where date_added < current_date`)
 			.then(nums => {
 			  db.select('food', 'calories', 'fat', 'carbs', 'protein')
 				.from('nutrition')
