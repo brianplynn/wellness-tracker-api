@@ -23,15 +23,25 @@ const logInGithub = (req, res, db) =>  {
 	request.post({ url: `https://github.com/login/oauth/access_token/?client_id=c7bdc63f0a88829cb6f2&client_secret=81e4ae8221fd323b103bab4cca15433b26f42ff4&code=${code}`, 
 				   headers: { 'User-Agent': 'request' }},
 				   (error, response, body) => {
-				   	  console.log('error:', error); 
-					  console.log('statusCode:', response && response.statusCode); 
-					  console.log('body:', body);
 					  request({ url: `https://api.github.com/user?${body}`,
 					  			headers: { 'User-Agent': 'request' }},
 						  (error, response, body) => {
-						   	  console.log('error:', error); 
-							  console.log('statusCode:', response && response.statusCode); 
-							  console.log('body:', body);
+							    const userid = "fb_" + body.id;
+							    console.log(userid);
+								db.select()
+								.from('users')
+								.where('id', '=', userid)
+								.then(user => {
+									if (user[0]) {
+										res.json(user[0]);
+									} else {
+										throw new Error;
+									}
+								})
+								.catch(err => {
+								 	res.status(400).json({ message: 'No such user. Please register',
+								 						   id: userid });
+								})
 					   })
 	})
 }
