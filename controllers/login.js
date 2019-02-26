@@ -26,7 +26,9 @@ const logInGithub = (req, res, db) =>  {
 					  request({ url: `https://api.github.com/user?${body}`,
 					  			headers: { 'User-Agent': 'request' }},
 						  (error, response, body) => {
-							    const userid = "fb_" + body.id;
+						  		console.log(body);
+						  		console.log(body.json())
+							    const userid = "gh_" + body.json().id;
 							    console.log(userid);
 								db.select()
 								.from('users')
