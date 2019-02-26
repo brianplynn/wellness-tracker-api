@@ -33,7 +33,7 @@ const logInGithub = (req, res, db) =>  {
 		.catch(err => {
 			console.log(err)
 			res.status(400).json(err.message)
-	}
+		})
 }
 
 module.exports = {
