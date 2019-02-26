@@ -7,7 +7,7 @@ const registerFB = (req, res, db) =>  {
 	
 }
 
-const registerGithub = (req, res) =>  {
+const registerGithub = (req, res, db) =>  {
 	const { id } = req.body;
 	console.log(id);
 	db('users').returning('id')
