@@ -42,7 +42,7 @@ app.post("/login-fb", (req, res) => { login.logInFB(req, res, db) });
 app.post("/login-gh", (req, res) => { login.logInGithub(req, res, db) });
 
 app.post("/register-fb", (req, res) => { register.registerFB(req, res, db) });
-app.post("/register-github", (req, res) => { register.registerGithub(req, res, db) });
+app.post("/register-gh", (req, res) => { register.registerGithub(req, res, db) });
 
 
 app.listen(port, () => {
