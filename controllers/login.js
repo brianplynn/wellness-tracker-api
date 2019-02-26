@@ -21,14 +21,9 @@ const logInFB = (req, res, db) =>  {
 
 const logInGithub = (req, res, db) =>  {
 	const { code } = req.body;
-	fetch('https://github.com/login/oauth/access_token', {
+	fetch(`https://github.com/login/oauth/access_token/?client_id=c7bdc63f0a88829cb6f2&client_secret=81e4ae8221fd323b103bab4cca15433b26f42ff4&code=${code}`, {
 	        method: "post",
-	        headers: {'Content-Type': 'application/json'},
-	        body: JSON.stringify({  
-	          client_id: 'c7bdc63f0a88829cb6f2',
-	          client_secret: '81e4ae8221fd323b103bab4cca15433b26f42ff4',
-	          code: code
-	        })
+	        headers: {'User-Agent': 'request' }
 	      })
 		.then(res => res.json())
 		.then(json=> {
