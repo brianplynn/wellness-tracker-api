@@ -25,14 +25,8 @@ const logInGithub = (req, res, db) =>  {
 	        method: "post",
 	        headers: {'User-Agent': 'request' }
 	      })
-		.then(res => res.json())
-		.then(json=> {
-			console.log(json);
-			res.json(json);
-		})
-		.catch(err => {
-			console.log(err)
-			res.status(400).json(err.message)
+		.then(res => {
+			console.log(res)
 		})
 }
 
