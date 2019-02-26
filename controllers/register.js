@@ -9,7 +9,6 @@ const registerFB = (req, res, db) =>  {
 
 const registerGithub = (req, res, db) =>  {
 	const { id } = req.body;
-	console.log(req.body);
 	console.log(id);
 	db('users').returning('id')
 			   .insert({ id: id })
