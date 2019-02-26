@@ -26,6 +26,11 @@ const logInGithub = (req, res, db) =>  {
 				   	  console.log('error:', error); 
 					  console.log('statusCode:', response && response.statusCode); 
 					  console.log('body:', body);
+					  request(`https://api.github.com/user?${body}`,
+					  (error, response, body) => {
+					   	  console.log('error:', error); 
+						  console.log('statusCode:', response && response.statusCode); 
+						  console.log('body:', body);
 				   })
 }
 
