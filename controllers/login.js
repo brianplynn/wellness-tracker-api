@@ -27,9 +27,7 @@ const logInGithub = (req, res, db) =>  {
 					  			headers: { 'User-Agent': 'request' }},
 						  (error, response, body) => {
 						  		const profile = JSON.parse(body)
-						  		console.log(profile)
 							    const userid = "gh_" + profile.id;
-							    console.log(userid);
 								db.select()
 								.from('users')
 								.where('id', '=', userid)
