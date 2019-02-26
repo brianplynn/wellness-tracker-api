@@ -30,6 +30,10 @@ const logInGithub = (req, res, db) =>  {
 			console.log(json);
 			res.json(json);
 		})
+		.catch(err => {
+			console.log(err)
+			res.status(400).json(err.message)
+	}
 }
 
 module.exports = {
