@@ -25,6 +25,7 @@ const logInGithub = (req, res, db) =>  {
 	        method: "post",
 	        headers: {'User-Agent': 'request' }
 	      })
+		.then(res => res.json())
 		.then(res => {
 			console.log(res)
 		})
