@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-
+const request = require('request'); 
 const logInFB = (req, res, db) =>  {
 	const { id } = req.body;
 	const userid = "fb_" + id;
@@ -21,14 +20,13 @@ const logInFB = (req, res, db) =>  {
 
 const logInGithub = (req, res, db) =>  {
 	const { code } = req.body;
-	fetch(`https://github.com/login/oauth/access_token/?client_id=c7bdc63f0a88829cb6f2&client_secret=81e4ae8221fd323b103bab4cca15433b26f42ff4&code=${code}`, {
-	        method: "post",
-	        headers: {'User-Agent': 'request' }
-	      })
-		.then(res => res.json())
-		.then(res => {
-			console.log(res)
-		})
+	request.post({ url: `https://github.com/login/oauth/access_token/?client_id=c7bdc63f0a88829cb6f2&client_secret=81e4ae8221fd323b103bab4cca15433b26f42ff4&code=${code}`, 
+				   headers: { 'User-Agent': 'request' }},
+				   (error, response, body) => {
+				   	  console.log('error:', error); 
+					  console.log('statusCode:', response && response.statusCode); 
+					  console.log('body:', body);
+				   })
 }
 
 module.exports = {
