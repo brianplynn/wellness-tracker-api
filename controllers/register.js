@@ -8,7 +8,11 @@ const registerFB = (req, res, db) =>  {
 }
 
 const registerGithub = (req, res) =>  {
-	
+	const { id } = req.body;
+	console.log(id);
+	db('users').returning('id')
+			   .insert({ id: userid })
+			   .then(user => res.json(user));
 }
 
 module.exports = {
