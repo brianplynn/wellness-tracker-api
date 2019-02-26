@@ -11,7 +11,7 @@ const registerGithub = (req, res) =>  {
 	const { id } = req.body;
 	console.log(id);
 	db('users').returning('id')
-			   .insert({ id: userid })
+			   .insert({ id: id })
 			   .then(user => res.json(user));
 }
 
