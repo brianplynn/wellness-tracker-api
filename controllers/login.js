@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const logInFB = (req, res, db) =>  {
 	const { id } = req.body;
 	const userid = "fb_" + id;
@@ -28,7 +30,11 @@ const logInGithub = (req, res, db) =>  {
 	          code: code
 	        })
 	      })
-		.then(res => res.json(res))
+		.then(res => res.json())
+		.then(json=> {
+			console.log(json);
+			res.json(json);
+		})
 }
 
 module.exports = {
